@@ -1,4 +1,14 @@
 import time
+from random import seed
+from random import randint
+
+old_x = 5
+old_size = 5
+new_x = 5
+new_size = 5
+seed(1)
+front = None
+side = None
 
 
 def north():
@@ -17,30 +27,58 @@ def west():
     print("west")
 
 
-def stop_motors():
+def stop():
     print("stop")
 
 
-counter = 0
+def northeast():
+    print("northeast")
+
+
+def northwest():
+    print("northwest")
+
+
+def southeast():
+    print("southeast")
+
+
+def southwest():
+    print("southwest")
+
 
 while True:
-    print(counter)
-    if counter == 20:
-        break
+    new_x = randint(0, 10)
+    new_size = randint(0, 10)
+    print("Old x: " + str(old_x) + "|New x: " + str(new_x))
+    print("Old size: " + str(old_size) + "|New size: " + str(new_size))
 
-    mod5 = counter % 5
-    print(mod5)
+    front = new_size - old_size
+    side = new_x - old_x
+    print("Front: " + str(front) + " |Side: " + str(side))
 
-    if mod5 == 0:
-        north()
-    elif mod5 == 1:
-        east()
-    elif mod5 == 2:
-        south()
-    elif mod5 == 3:
-        west()
+    if front > 0:
+        if side > 0:
+            northeast()
+        elif side < 0:
+            northwest()
+        else:
+            north()
+    elif front < 0:
+        if side > 0:
+            southeast()
+        elif side < 0:
+            southwest()
+        else:
+            south()
     else:
-        stop_motors()
+        if side > 0:
+            east()
+        elif side < 0:
+            west()
+        else:
+            stop()
 
-    counter = counter + 1
+    old_x = new_x
+    old_size = new_size
     time.sleep(2)
