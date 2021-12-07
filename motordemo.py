@@ -110,7 +110,7 @@ try:
         # while the power switch is on, the car will move
         while GPIO.input(power_switch):
             # if the limit switches are triggered the car will stop
-            if GPIO.input(limit_switch):
+            if not GPIO.input(limit_switch):
                 time.sleep(10)
 
             # creating random new x and size variable to mimic camera input
