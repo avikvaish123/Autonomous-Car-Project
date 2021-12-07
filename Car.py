@@ -109,19 +109,8 @@ while True:
             break
         # TODO: get new image, x position and size
 
-        if new_x > old_x:
-            side = 1
-        elif new_x == old_x:
-            side = 0
-        else:
-            side = -1
-
-        if old_size > new_size:
-            front = 1
-        elif old_size > new_size:
-            front = 0
-        else:
-            front = -1
+        front = new_size - old_size
+        side = new_x - old_x
 
         if front > 0:
             if side == 1:
