@@ -3,13 +3,13 @@ import cv2
 #thres = 0.5
 
 classNames=[]
-classFile = '/home/pi/Desktop/ECE120 HL/ObjectDetection/coco.names'
+classFile = 'coco.names'
 with open(classFile,'rt') as f:
     classNames = f.read().rstrip('\n').split('\n')
     print(classNames)
 
-configPath = '/home/pi/Desktop/ECE120 HL/ObjectDetection/ssd_mobilenet_v3_large_coco_2020_01_14.pbtxt'
-weightsPath = '/home/pi/Desktop/ECE120 HL/ObjectDetection/frozen_inference_graph.pb'
+configPath = 'ssd_mobilenet_v3_large_coco_2020_01_14.pbtxt'
+weightsPath = 'frozen_inference_graph.pb'
 
 net = cv2.dnn_DetectionModel(weightsPath,configPath)
 net.setInputSize(320,320)
@@ -26,6 +26,7 @@ def getObjects(img,thres,nms,draw=True,objects=[]):
     objectInfo=[]
     if len(classIds) != 0:
         for classId, confidence, box in zip(classIds.flatten(),confs.flatten(),bbox):
+            print(bbox)
             className = classNames[classId - 1]
             if className in objects:
                 objectInfo.append([box, className])
@@ -42,7 +43,7 @@ if __name__ == "__main__":
     cap.set(4, 480)
     while True:
         success, img = cap.read()
-        result, objectInfo = getObjects(img,0.5,0.2)
+        result, objectInfo = getObjects(img,0.5,0.2,objects=['person'])
         #print(objectInfo)
         cv2.imshow("output", img)
         cv2.waitKey(1)
